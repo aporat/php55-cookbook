@@ -1,6 +1,6 @@
 #
 # Author:: Adar Porat(<adar.porat@gmail.com>)
-# Cookbook Name:: php54
+# Cookbook Name:: php55
 # Attribute:: default
 ##
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,15 +32,15 @@ case node['platform_family']
     action :add
   end
   
-  node.set['php']['packages'] = ['php54w', 'php54w-devel', 'php54w-cli', 'php54w-snmp', 'php54w-soap', 'php54w-xml', 'php54w-xmlrpc', 'php54w-process', 'php54w-mysql55', 'php54w-pecl-memcache', 'php54w-pecl-apc', 'php54w-pear', 'php54w-pdo', 'php54w-gd', 'php54w-imap', 'php54w-mbstring']
+  node.set['php']['packages'] = ['php55w', 'php55w-devel', 'php55w-cli', 'php55w-snmp', 'php55w-soap', 'php55w-xml', 'php55w-xmlrpc', 'php55w-process', 'php55w-mysqlnd', 'php55w-pecl-memcache', 'php55w-opcache', 'php55w-pdo', 'php55w-imap', 'php55w-mbstring']
   node.set['mysql']['server']['packages'] = %w{mysql55-server}
   node.set['mysql']['client']['packages'] = %w{mysql55}
   
   when "debian"
     include_recipe "apt"
-	apt_repository "dotdeb-php54" do
-		uri "#{node['php54']['dotdeb']['uri']}"
-		distribution "#{node['php54']['dotdeb']['distribution']}-php54"
+	apt_repository "wheezy-php55" do
+		uri "#{node['php55']['dotdeb']['uri']}"
+		distribution "#{node['php55']['dotdeb']['distribution']}-php55"
 		components ['all']
 		key "http://www.dotdeb.org/dotdeb.gpg"
 		action :add

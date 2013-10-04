@@ -1,6 +1,6 @@
 #
 # Author:: Adar Porat(<adar.porat@gmail.com>)
-# Cookbook Name:: php54
+# Cookbook Name:: php55
 # Attribute:: default
 ##
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,6 @@
 
 case node["platform_family"]
   when "debian"
-    node.default['php54']['dotdeb']['uri'] = "http://packages.dotdeb.org"
-    node.default['php54']['dotdeb']['distribution'] = "squeeze"
+    node.default['php55']['dotdeb']['uri'] = "http://packages.dotdeb.org"
+    node.default['php55']['dotdeb']['distribution'] = "wheezy"
 end
