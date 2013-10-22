@@ -16,8 +16,38 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-  when "rhel", "fedora", "suse"
+case node[:platform]
+    
+    when "amazon"
+    # node.set['php']['packages'] = ['php55w', 'php55w-devel', 'php55w-cli', 'php55w-snmp', 'php55w-soap', 'php55w-xml', 'php55w-xmlrpc', 'php55w-process', 'php55w-mysqlnd', 'php55w-pecl-memcache', 'php55w-opcache', 'php55w-pdo', 'php55w-imap', 'php55w-mbstring']
+    node.set['mysql']['server']['packages'] = %w{mysql55-server}
+    node.set['mysql']['client']['packages'] = %w{mysql55}
+    
+    # add the webtatic repository
+    yum_repository "webtatic" do
+        repo_name "webtatic"
+        description "webtatic Stable repo"
+        url "http://repo.webtatic.com/yum/el6/x86_64/"
+        key "RPM-GPG-KEY-webtatic-andy"
+        action :add
+    end
+    
+    yum_key "RPM-GPG-KEY-webtatic-andy" do
+        url "http://repo.webtatic.com/yum/RPM-GPG-KEY-webtatic-andy"
+        action :add
+    end
+    
+    
+    # remove any existing php/mysql
+    execute "yum remove -y php* mysql*"
+    
+    # get the metadata
+    execute "yum -q makecache"
+    
+    # manually install php 5.5....
+    execute "yum install -y --skip-broken php55w php55w-devel php55w-cli php55w-snmp php55w-soap php55w-xml php55w-xmlrpc php55w-process php55w-mysqlnd php55w-pecl-memcache php55w-opcache php55w-pdo php55w-imap php55w-mbstring"
+
+  when "rhel", "fedora", "suse", "centos"
   # add the webtatic repository
   yum_repository "webtatic" do
     repo_name "webtatic"
@@ -36,6 +66,8 @@ case node['platform_family']
   node.set['mysql']['server']['packages'] = %w{mysql55-server}
   node.set['mysql']['client']['packages'] = %w{mysql55}
   
+  include_recipe "php"
+
   when "debian"
     include_recipe "apt"
 	apt_repository "wheezy-php55" do
@@ -45,6 +77,6 @@ case node['platform_family']
 		key "http://www.dotdeb.org/dotdeb.gpg"
 		action :add
 	end
+	
+	  include_recipe "php"
   end
-
-include_recipe 'php'
