@@ -1,6 +1,6 @@
 Description
 ===========
-Installs and configures PHP 5.4
+Installs and configures PHP 5.5
 
 
 ---
@@ -12,6 +12,7 @@ Platform
 
 * Debian, Ubuntu
 * CentOS, Red Hat, Fedora
+* Amazon Linux
 
 Cookbooks
 ---------
