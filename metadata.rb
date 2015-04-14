@@ -8,5 +8,6 @@ version          "0.0.2"
 depends "build-essential"
 depends "apt"
 depends "yum"
+depends "php"
 
 recipe "php55", "Installs php"
